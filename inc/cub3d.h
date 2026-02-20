@@ -34,26 +34,6 @@ typedef struct s_data
 	pthread_mutex_t	extreme_mutex;
 	int				extreme_turn;
 	pthread_mutex_t	dead_mutex;
-}	t_data;
-
-long	ft_atol(const char *nptr);
-int		ft_isdigit(int argc, char **argv);
-int		ft_isvalid(int argc, char **argv);
-int		ft_parse(int argc, char **argv);
-int		ft_init(int argc, char **argv, t_data *data);
-long	ft_get_time(void);
-void	ft_usleep(int ms);
-void	ft_print_status(t_philo *philo, char *status, t_data *data);
-int		ft_check_death(t_data *data);
-void	ft_eat(t_philo *philo, t_data *data);
-void	*ft_philosopher_routine(void *arg);
-int		ft_start_simulation(t_data *data);
-void	ft_cleanup(t_data *data);
-int		ft_is_extreme_case(t_data *data);
-void	*ft_extreme_philosopher_routine(void *arg);
-int		ft_extreme_eat(t_philo *philo, t_data *data);
-int		ft_check_meals_completed(t_data *data);
-int		ft_check_philosopher_death(t_data *data);
-void	ft_monitor_death(t_data *data);*/
+}	t_data;*/
 
 #endif
