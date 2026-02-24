@@ -16,7 +16,7 @@ void	free_array(char **array)
 }
 // REVISAR
 
-static void	cleanup_textures(t_game *game)
+/* static void	cleanup_textures(t_game *game)
 {
 	if (game->tex->tex_floor)
 		mlx_delete_texture(game->tex->tex_floor);
@@ -42,13 +42,13 @@ static void	cleanup_images(t_game *game)
 		mlx_delete_image(game->mlx, game->img->img_player);
 	if (game->img->img_exit)
 		mlx_delete_image(game->mlx, game->img->img_exit);
-}
+} */
 
 void	cleanup_game(t_game *game)
 {
 	if (!game)
 		return ;
-	if (game->map)
+/* 	if (game->map)
 		free_map_data(game->map);
 	if (game->tex)
 	{
@@ -59,7 +59,7 @@ void	cleanup_game(t_game *game)
 	{
 		cleanup_images(game);
 		free(game->img);
-	}
+	} */
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	free(game);

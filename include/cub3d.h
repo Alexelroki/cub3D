@@ -20,9 +20,10 @@ typedef struct s_game
 	mlx_image_t	*img;
 }	t_game;
 
+void	validate_args(int argc, char **argv);
 void	init_game(t_game *game);
 
-void	setup_hooks(game);
+void	setup_hooks(t_game *game);
 
 void	cleanup_game(t_game *game);
 void	exit_error(const char *message, t_game *game);
