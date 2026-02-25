@@ -9,6 +9,9 @@ OBJ_DIR	= obj
 
 SRC	=	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parser/validate_args.c \
+		$(SRC_DIR)/parser/parse_file.c \
+		$(SRC_DIR)/parser/parse_header.c \
+		$(SRC_DIR)/parser/parse_color.c \
 		$(SRC_DIR)/init.c \
 		$(SRC_DIR)/events/event.c \
 		$(SRC_DIR)/utils/cleanup.c \
