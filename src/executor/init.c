@@ -1,79 +1,131 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "MLX42/MLX42.h"
+#include "cub3d.h"
 
-#define WIDTH 512
-#define HEIGHT 512
+/* static char	*g_test_map[] = {
+	"111111111111111111111111",
+	"100000000000000000000001",
+	"101100000111000000000001",
+	"100100000000000000000001",
+	"111111111011000001100001",
+	"100000000011000001100001",
+	"100000000000000000000001",
+	"100000000000000000000001",
+	"100000000000000000000001",
+	"100000000000000000000001",
+	"100000000000000000000001",
+	"100000000000000000000001",
+	"111111111111111111111111",
+	NULL
+}; */
 
-static mlx_image_t* image;
+static char	*g_test_map[] = {
+	"111111111111111111111111111111111",
+	"111111111000000000110000000000001",
+	"111111111011000001110000000000001",
+	"111111111001000000000000000000001",
+	"111111111011000001110000000000001",
+	"100000000011000001110111111111111",
+	"111101111111110111000000100011111",
+	"111101111111110111010100100011111",
+	"110000001101010111000000100011111",
+	"100000000000000011000000100011111",
+	"100000000000000011010100100011111",
+	"11000001110101011111011110N011111",
+	"111101111111010111011110100011111",
+	"111111111111111111111111111111111",
+	NULL
+};
 
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+static void	init_map(t_game *game)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
-}
+	int	i;
 
-void ft_randomize(void* param)
-{
-	(void)param;
-	for (uint32_t i = 0; i < image->width; ++i)
+	game->map.grid = g_test_map;
+	game->map.height = 0;
+	i = 0;
+	while (g_test_map[i])
 	{
-		for (uint32_t y = 0; y < image->height; ++y)
-		{
-			uint32_t color = ft_pixel(
-				rand() % 0xFF, // R
-				rand() % 0xFF, // G
-				rand() % 0xFF, // B
-				rand() % 0xFF  // A
-			);
-			mlx_put_pixel(image, i, y, color);
-		}
+		game->map.height++;
+		i++;
 	}
+	game->map.width = ft_strlen(g_test_map[0]);
 }
 
-void ft_hook(void* param)
+/* static void	init_map(t_game *game)
 {
-	mlx_t* mlx = param;
+	int	i;
 
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		image->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		image->instances[0].x += 5;
+	game->map.grid = g_test_map;
+	game->map.height = 0;
+	i = 0;
+	while (g_test_map[i])
+	{
+		game->map.height++;
+		i++;
+	}
+	game->map.width = 24;
+} */
+
+static void	init_player(t_game *game)
+{//falta poner la posicion del jugador en el mapa y su direccion inicial segun el mapa
+	game->player.pos_x = 12.0;
+	game->player.pos_y = 6.0;
+	if (game->map.grid[6][12] == 'N')
+	{
+		game->player.dir_x = 0.0;
+		game->player.dir_y = -1.0;
+	}
+	else if (game->map.grid[6][12] == 'S')
+	{
+		game->player.dir_x = 0.0;
+		game->player.dir_y = 1.0;
+	}
+	else if (game->map.grid[6][12] == 'E')
+	{
+		game->player.dir_x = 1.0;
+		game->player.dir_y = 0.0;
+	}
+	else if (game->map.grid[6][12] == 'W')
+	{
+		game->player.dir_x = -1.0;
+		game->player.dir_y = 0.0;
+	}
+	game->player.plane_x = 0.0;
+	game->player.plane_y = 0.66;
+}
+
+static void	init_textures(t_game *game)
+{
+	game->tex.north = mlx_load_png("./textures/NO.png");
+	game->tex.south = mlx_load_png("./textures/SO.png");
+	game->tex.west = mlx_load_png("./textures/WEST.png");
+	game->tex.east = mlx_load_png("./textures/EA.png");
+}
+
+void	init_game(t_game *game)
+{
+	init_map(game);
+	init_player(game);
+	init_textures(game);
+	game->floor_color = 0xDC6400FF;
+	game->ceiling_color = 0xE11E00FF;
 }
 
 int	main(void)
 {
-	mlx_t* mlx;
+	t_game	game;
 
-	// Gotta error check this stuff
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (!(image = mlx_new_image(mlx, 128, 128)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	
-	mlx_loop_hook(mlx, ft_randomize, mlx);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
+	game.mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
+	if (!game.mlx)
+		return (1);
+	game.img = mlx_new_image(game.mlx, WIDTH, HEIGHT);
+	if (!game.img)
+		return (mlx_terminate(game.mlx), 1);
+	if (mlx_image_to_window(game.mlx, game.img, 0, 0) == -1)
+		return (mlx_terminate(game.mlx), 1);
+	init_game(&game);
+	mlx_loop_hook(game.mlx, render_frame, &game);
+	mlx_loop_hook(game.mlx, handle_input, &game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
+	return (0);
 }

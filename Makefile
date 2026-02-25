@@ -9,18 +9,27 @@ INCLUDE		:= -Iinc -I$(LIBMLX_DIR)/include -I$(LIBFT_DIR)
 LIBFT_A		:= $(LIBFT_DIR)/libft.a
 LIBMLX_A	:= $(LIBMLX_DIR)/build/libmlx42.a
 LIBS		:= $(LIBFT_A) $(LIBMLX_A) -ldl -lglfw -lpthread -lm
+SRC_DIR	:= src
+OBJ_DIR	:= obj
+DEP_DIR	:= deps
 
 # Archivos fuente para el proyecto completo
-SRCS		:= src/main.c \
-			   src/parser/parser.c \
-			   src/executor/init.c
+SRCS		:= $(SRC_DIR)/main.c \
+		   $(SRC_DIR)/parser/parser.c \
+		   $(SRC_DIR)/executor/init.c \
+		   $(SRC_DIR)/executor/raycasting.c \
+		   $(SRC_DIR)/executor/draw.c \
+		   $(SRC_DIR)/executor/input.c
 
 # Archivos solo para pruebas del executor
-EXEC_SRCS	:= src/executor/init.c
+EXEC_SRCS	:= $(SRC_DIR)/executor/init.c \
+		   $(SRC_DIR)/executor/raycasting.c \
+		   $(SRC_DIR)/executor/draw.c \
+		   $(SRC_DIR)/executor/input.c
 
-OBJS		:= $(SRCS:.c=.o)
-EXEC_OBJS	:= $(EXEC_SRCS:.c=.o)
-DEPS		:= $(SRCS:.c=.d)
+OBJS		:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+EXEC_OBJS	:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(EXEC_SRCS))
+DEPS		:= $(patsubst $(SRC_DIR)/%.c,$(DEP_DIR)/%.d,$(SRCS))
 
 all: $(NAME)
 
@@ -35,8 +44,9 @@ $(EXEC_TEST): $(LIBFT_A) $(LIBMLX_A) $(EXEC_OBJS)
 	@$(CC) $(CFLAGS) $(EXEC_OBJS) $(LIBS) -o $(EXEC_TEST)
 	@echo "✓ test_executor compiled"
 
-%.o: %.c
-	@$(CC) $(CFLAGS) $(INCLUDE) -MMD -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@) $(dir $(DEP_DIR)/$*)
+	@$(CC) $(CFLAGS) $(INCLUDE) -MMD -MF $(DEP_DIR)/$*.d -c $< -o $@
 
 $(LIBFT_A):
 	@echo "Compiling libft..."
@@ -44,10 +54,10 @@ $(LIBFT_A):
 
 $(LIBMLX_A):
 	@echo "Compiling MLX42..."
-	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build > /dev/null 2>&1 && cmake --build $(LIBMLX_DIR)/build -j4 > /dev/null 2>&1
+	@cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build && cmake --build $(LIBMLX_DIR)/build -j4
 
 clean:
-	@rm -f $(OBJS) $(DEPS)
+	@rm -rf $(OBJ_DIR) $(DEP_DIR)
 	@make -C $(LIBFT_DIR) clean -s
 	@echo "✓ Cleaned"
 
