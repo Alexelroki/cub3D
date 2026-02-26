@@ -55,7 +55,7 @@ void	handle_input(void *param)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
 		move_backward(game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
-		rotate_player(game, ROT_SPEED);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 		rotate_player(game, -ROT_SPEED);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+		rotate_player(game, ROT_SPEED);
 }

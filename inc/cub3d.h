@@ -9,13 +9,13 @@
 # include "libft.h"
 # include "MLX42/MLX42.h"
 
-// Dimensiones de la ventana
-# define WIDTH 1280
-# define HEIGHT 720
+// Dimensiones de la ventana (comentadas las resoluciones más altas para pruebas)
+# define WIDTH /* 3840 */1280
+# define HEIGHT /* 2160 */720
 
 // Velocidad de movimiento y rotación
-# define MOVE_SPEED 0.05
-# define ROT_SPEED 0.03
+# define MOVE_SPEED /* 0.8 */0.14
+# define ROT_SPEED /* 0.15 */0.09
 
 /* Estructura del mapa 2D */
 typedef struct s_map
