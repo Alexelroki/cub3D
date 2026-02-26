@@ -30,12 +30,19 @@ typedef struct s_textures
 
 typedef struct s_map
 {
-	
+	char	**grid;
+	int		rows;
+	int		cols;
 }	t_map;
 
 typedef struct s_player
 {
-	
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 }	t_player;
 
 typedef struct s_game
@@ -43,14 +50,18 @@ typedef struct s_game
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	char		**file;
-	t_textures	*textures;
-	t_map		*map;
-	t_player	*player;
+	t_textures	textures;
+	t_map		map;
+	t_player	player;
 }	t_game;
 
-void	validate_args(int argc, char **argv);
-void	parse_file(t_game *game, char *file);
 void	init_game(t_game *game);
+
+void	validate_args(int argc, char **argv);
+
+void	parse_file(t_game *game, char *file);
+int		parse_header(t_game *game);
+void	parse_color(t_game *game, int *dst, char *line);
 
 void	setup_hooks(t_game *game);
 

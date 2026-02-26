@@ -20,4 +20,6 @@ void	init_game(t_game *game)
 {
 	init_window(game);
 	init_image(game);
+	game->textures.floor_color = -1;
+	game->textures.cecil_color = -1;
 }
