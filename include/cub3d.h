@@ -68,6 +68,8 @@ void	parse_map(t_game *game, int start);
 void	validate_map(t_game *game);
 void	check_walls(t_game *game);
 
+void	init_player_dir(t_game *game);
+
 void	setup_hooks(t_game *game);
 
 void	cleanup_game(t_game *game);

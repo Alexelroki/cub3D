@@ -14,7 +14,6 @@ void	free_array(char **array)
 	}
 	free(array);
 }
-// REVISAR
 
 static void	cleanup_textures(t_game *game)
 {
@@ -27,6 +26,8 @@ static void	cleanup_textures(t_game *game)
 	if (game->textures.path_ea)
 		free(game->textures.path_ea);
 }
+
+// REVISAR
 
 /* static void	cleanup_images(t_game *game)
 {
