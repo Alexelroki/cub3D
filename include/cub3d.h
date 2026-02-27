@@ -43,6 +43,7 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
+	char	spawn_dir; // 'N', 'S', 'E' o 'W'
 }	t_player;
 
 typedef struct s_game
@@ -63,9 +64,14 @@ void	parse_file(t_game *game, char *file);
 int		parse_header(t_game *game);
 void	parse_color(t_game *game, int *dst, char *line);
 
+void	parse_map(t_game *game, int start);
+void	validate_map(t_game *game);
+void	check_walls(t_game *game);
+
 void	setup_hooks(t_game *game);
 
 void	cleanup_game(t_game *game);
+void	free_array(char **array);
 void	exit_error(const char *message, t_game *game);
 
 #endif

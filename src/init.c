@@ -20,6 +20,9 @@ void	init_game(t_game *game)
 {
 	init_window(game);
 	init_image(game);
+	ft_memset(game, 0, sizeof(t_game));
 	game->textures.floor_color = -1;
 	game->textures.cecil_color = -1;
+	game->player.pos_x = -1;
+	game->player.pos_y = -1;
 }
