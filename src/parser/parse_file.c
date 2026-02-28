@@ -1,10 +1,12 @@
 #include "cub3d.h"
 
-static int	count_lines(int fd)
+static int	count_lines(char *file)
 {
+	int		fd;
 	char	*line;
 	int		count;
 
+	fd = open(file, O_RDONLY);
 	count = 0;
 	line = get_next_line(fd);
 	while (line)
@@ -13,6 +15,7 @@ static int	count_lines(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (count);
 }
 
@@ -24,9 +27,7 @@ void	parse_file(t_game *game, char *file)
 	char	*line;
 	char	*trimmed;
 
-	fd = open(file, O_RDONLY);
-	lines = count_lines(fd);
-	close(fd);
+	lines = count_lines(file);
 	fd = open(file, O_RDONLY);
 	game->file = malloc(sizeof(char *) * (lines + 1));
 	if (!game->file)

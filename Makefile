@@ -10,7 +10,7 @@ PARSE_DIR = $(SRC_DIR)/parser
 UTILS_DIR = $(SRC_DIR)/utils
 
 SRC	=	$(SRC_DIR)/main.c \
-		$(SRC_DIR)/init.c \
+		$(SRC_DIR)/init/init.c \
 		$(SRC_DIR)/events/event.c \
 		$(PARSE_DIR)/validate_args.c \
 		$(PARSE_DIR)/parse_file.c \

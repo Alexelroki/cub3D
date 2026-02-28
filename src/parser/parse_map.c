@@ -33,7 +33,7 @@ static int	get_map_cols(t_game *game, int start)
 	return (max);
 }
 
-static void	copy_map(t_game *game, int	start)
+static void	copy_map(t_game *game, int start)
 {
 	int	i;
 

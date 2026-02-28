@@ -57,7 +57,7 @@ void	cleanup_game(t_game *game)
 		return ;
 	if (game->file)
 		free_array(game->file);
- 	if (game->map.grid)
+	if (game->map.grid)
 		free_array(game->map.grid);
 	cleanup_textures(game);
 /* 	if (game->img)

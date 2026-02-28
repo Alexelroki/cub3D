@@ -13,7 +13,10 @@ static char	**copy_map_grid(t_game *game)
 	{
 		map_copy[i] = ft_strdup(game->map.grid[i]);
 		if (!map_copy[i])
+		{
+			free_array(map_copy);
 			exit_error("Malloc map copy line floodfill failed", game);
+		}
 		i++;
 	}
 	map_copy[i] = NULL;

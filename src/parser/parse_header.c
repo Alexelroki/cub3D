@@ -1,5 +1,19 @@
 #include "cub3d.h"
 
+static int	is_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static void	parse_texture(t_game *game, char **dst, char *line)
 {
 	int	i;
@@ -40,7 +54,7 @@ int	parse_header(t_game *game)
 	i = 0;
 	while (game->file[i])
 	{
-		if (game->file[i][0] == '\0')
+		if (is_empty_line(game->file[i]))
 		{
 			i++;
 			continue ;
@@ -52,7 +66,7 @@ int	parse_header(t_game *game)
 	if (!game->textures.path_no || !game->textures.path_so
 		|| !game->textures.path_we || !game->textures.path_ea)
 		exit_error("Missing texture identifier", game);
-	if (!game->textures.floor_color || !game->textures.ceil_color)
+	if (game->textures.floor_color == -1 || game->textures.ceil_color == -1)
 		exit_error("Missing color identifier", game);
 	return (i);
 }
