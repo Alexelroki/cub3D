@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	init_window(t_game *game)
+void	init_window(t_game *game)
 {
 	game->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
 	if (!game->mlx)
@@ -34,27 +34,25 @@ void	init_player_dir(t_game *game)
 	}
 	else if (game->player.spawn_dir == 'W')
 	{
-		game->player.dir_x = 1;
-		game->player.dir_y = 0;
-		game->player.plane_x = 0;
-		game->player.plane_y = 0.66;
-	}
-	else if (game->player.spawn_dir == 'E')
-	{
 		game->player.dir_x = -1;
 		game->player.dir_y = 0;
 		game->player.plane_x = 0;
 		game->player.plane_y = -0.66;
 	}
+	else if (game->player.spawn_dir == 'E')
+	{
+		game->player.dir_x = 1;
+		game->player.dir_y = 0;
+		game->player.plane_x = 0;
+		game->player.plane_y = 0.66;
+	}
 }
 
 void	init_game(t_game *game)
 {
-	init_window(game);
-	//init_image(game);
 	ft_memset(game, 0, sizeof(t_game));
 	game->textures.floor_color = -1;
-	game->textures.cecil_color = -1;
+	game->textures.ceil_color = -1;
 	game->player.pos_x = -1;
 	game->player.pos_y = -1;
 }

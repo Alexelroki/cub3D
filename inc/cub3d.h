@@ -20,12 +20,12 @@ typedef struct s_textures
 	char			*path_so;
 	char			*path_we;
 	char			*path_ea;
-	mlx_texture_t	*no;
-	mlx_texture_t	*so;
-	mlx_texture_t	*we;
-	mlx_texture_t	*ea;
+	mlx_texture_t	*tex_no;
+	mlx_texture_t	*tex_so;
+	mlx_texture_t	*tex_we;
+	mlx_texture_t	*tex_ea;
 	int				floor_color;
-	int				cecil_color;
+	int				ceil_color;
 }	t_textures;
 
 typedef struct s_map
@@ -57,6 +57,7 @@ typedef struct s_game
 }	t_game;
 
 void	init_game(t_game *game);
+void	init_window(t_game *game);
 
 void	validate_args(int argc, char **argv);
 

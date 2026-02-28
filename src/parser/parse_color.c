@@ -22,14 +22,14 @@ void	parse_color(t_game *game, int *dst, char *line)
 		exit_error("Duplicate color identifier", game);
 	rgb = ft_split(line, ',');
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
+	{
+		free_array(rgb);
 		exit_error("Invalid color format", game);
+	}
 	r = ft_atoi(rgb[0]);
 	g = ft_atoi(rgb[1]);
 	b = ft_atoi(rgb[2]);
+	free_array(rgb);
 	validate_range(game, r, g, b);
 	*dst = rgb_to_int(r, g, b);
-	free(rgb[0]);
-	free(rgb[1]);
-	free(rgb[2]);
-	free(rgb);
 }

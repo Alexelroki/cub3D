@@ -10,7 +10,7 @@ static void	parse_texture(t_game *game, char **dst, char *line)
 	while (line[i] && line[i] == ' ')
 		i++;
 	*dst = ft_strtrim(line + i, " \n");
-	if (!*dst || ft_strlen(*dst == 0))
+	if (!*dst || ft_strlen(*dst) == 0)
 		exit_error("Invalid texture path", game);	
 }
 
@@ -27,7 +27,7 @@ static int	parse_identifier(t_game *game, char *line)
 	else if (ft_strncmp(line, "F ", 2) == 0)
 		parse_color(game, &game->textures.floor_color, line + 2);
 	else if (ft_strncmp(line, "C ", 2) == 0)
-		parse_color(game, &game->textures.cecil_color, line + 2);
+		parse_color(game, &game->textures.ceil_color, line + 2);
 	else
 		return (0);
 	return (1);
@@ -38,7 +38,7 @@ int	parse_header(t_game *game)
 	int	i;
 
 	i = 0;
-	while (game->file)
+	while (game->file[i])
 	{
 		if (game->file[i][0] == '\0')
 		{
@@ -52,7 +52,7 @@ int	parse_header(t_game *game)
 	if (!game->textures.path_no || !game->textures.path_so
 		|| !game->textures.path_we || !game->textures.path_ea)
 		exit_error("Missing texture identifier", game);
-	if (!game->textures.floor_color || !game->textures.cecil_color)
+	if (!game->textures.floor_color || !game->textures.ceil_color)
 		exit_error("Missing color identifier", game);
 	return (i);
 }

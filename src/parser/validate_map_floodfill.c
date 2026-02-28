@@ -28,9 +28,9 @@ static void	flood_fill(t_game *game, char **map, int row, int col)
 		exit_error("Map is not closed", game);
 	if (map[row][col] == ' ')
 		exit_error("Map is not closed", game);
-	if (map[row][col] == 1 || map[row][col] == 'X')
+	if (map[row][col] == '1' || map[row][col] == 'X')
 		return ;
-	map[row][col] == 'X';
+	map[row][col] = 'X';
 	flood_fill(game, map, row - 1, col);
 	flood_fill(game, map, row + 1, col);
 	flood_fill(game, map, row, col - 1);

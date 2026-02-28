@@ -22,6 +22,7 @@ void	parse_file(t_game *game, char *file)
 	int		lines;
 	int		i;
 	char	*line;
+	char	*trimmed;
 
 	fd = open(file, O_RDONLY);
 	lines = count_lines(fd);
@@ -34,9 +35,13 @@ void	parse_file(t_game *game, char *file)
 	line = get_next_line(fd);
 	while (line)
 	{
-		game->file[i++] = line;
+		trimmed = ft_strtrim(line, "\n");
+		free(line);
+		if (!trimmed)
+			exit_error("Malloc trimmed line failed", game);
+		game->file[i++] = trimmed;
 		line = get_next_line(fd);
 	}
-	game->file = NULL;
+	game->file[i] = NULL;
 	close(fd);
 }

@@ -25,6 +25,14 @@ static void	cleanup_textures(t_game *game)
 		free(game->textures.path_we);
 	if (game->textures.path_ea)
 		free(game->textures.path_ea);
+	if (game->textures.tex_no)
+		mlx_delete_texture(game->textures.tex_no);
+	if (game->textures.tex_so)
+		mlx_delete_texture(game->textures.tex_so);
+	if (game->textures.tex_we)
+		mlx_delete_texture(game->textures.tex_we);
+	if (game->textures.tex_ea)
+		mlx_delete_texture(game->textures.tex_ea);
 }
 
 // REVISAR
@@ -59,5 +67,4 @@ void	cleanup_game(t_game *game)
 	} */
 	if (game->mlx)
 		mlx_terminate(game->mlx);
-	free(game);
 }
