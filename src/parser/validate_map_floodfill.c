@@ -23,21 +23,26 @@ static char	**copy_map_grid(t_game *game)
 	return (map_copy);
 }
 
-static void	flood_fill(t_game *game, char **map, int row, int col)
+static int	flood_fill(t_game *game, char **map, int row, int col)
 {
 	if (row < 0 || row >= game->map.rows)
-		exit_error("Map is not closed", game);
+		return (0);
 	if (col < 0 || col >= (int)ft_strlen(map[row])) //Tenemos filas con diferentes tamaños
-		exit_error("Map is not closed", game);
+		return (0);
 	if (map[row][col] == ' ')
-		exit_error("Map is not closed", game);
+		return (0);
 	if (map[row][col] == '1' || map[row][col] == 'X')
-		return ;
+		return (1);
 	map[row][col] = 'X';
-	flood_fill(game, map, row - 1, col);
-	flood_fill(game, map, row + 1, col);
-	flood_fill(game, map, row, col - 1);
-	flood_fill(game, map, row, col + 1);
+	if (!flood_fill(game, map, row - 1, col))
+		return (0);
+	if (!flood_fill(game, map, row + 1, col))
+		return (0);
+	if (!flood_fill(game, map, row, col - 1))
+		return (0);
+	if (!flood_fill(game, map, row, col + 1))
+		return (0);
+	return (1);
 }
 
 void	check_walls(t_game *game)
@@ -45,10 +50,13 @@ void	check_walls(t_game *game)
 	char	**map_copy;
 	int		start_row;
 	int		start_col;
+	int		result;
 
 	map_copy = copy_map_grid(game);
 	start_row = (int)game->player.pos_y;
 	start_col = (int)game->player.pos_x;
-	flood_fill(game, map_copy, start_row, start_col);
+	result = flood_fill(game, map_copy, start_row, start_col);
 	free_array(map_copy);
+	if (!result)
+		exit_error("Map is not closed", game);
 }
