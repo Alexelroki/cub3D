@@ -7,6 +7,7 @@ INCLUDE	= -I inc -I libft -I $(MLX42_DIR)/include/MLX42
 SRC_DIR	= src
 OBJ_DIR	= obj
 PARSE_DIR = $(SRC_DIR)/parser
+EXEC_DIR = $(SRC_DIR)/executor
 UTILS_DIR = $(SRC_DIR)/utils
 
 SRC	=	$(SRC_DIR)/main.c \
@@ -20,7 +21,11 @@ SRC	=	$(SRC_DIR)/main.c \
 		$(PARSE_DIR)/validate_map.c \
 		$(PARSE_DIR)/validate_map_floodfill.c \
 		$(UTILS_DIR)/cleanup.c \
-		$(UTILS_DIR)/error.c
+		$(UTILS_DIR)/error.c \
+		$(EXEC_DIR)/execute.c \
+		$(EXEC_DIR)/render.c \
+		$(EXEC_DIR)/moves.c \
+		$(EXEC_DIR)/raycasting.c
 
 OBJS	= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 LIBFT_DIR = libft
@@ -46,7 +51,8 @@ $(MLX42):
 $(NAME): $(OBJS) $(LIBFT) $(MLX42)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX42FLAGS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDE) -MMD -MP -c $< -o $@
 
 $(OBJ_DIR):

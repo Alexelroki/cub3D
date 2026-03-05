@@ -13,6 +13,9 @@ int	main(int argc, char **argv)
 	init_player_dir(&game);
 	init_window(&game);
 	setup_hooks(&game);
+	start_game(&game);
+	mlx_loop_hook(game.mlx, ft_render, &game);
+	mlx_loop_hook(game.mlx, handle_input, &game);
 	mlx_loop(game.mlx);
 	cleanup_game(&game);
 	return (0);

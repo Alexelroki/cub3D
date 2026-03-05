@@ -56,6 +56,7 @@ typedef struct s_game
 	t_player	player;
 }	t_game;
 
+// Parser functions
 void	init_game(t_game *game);
 void	init_window(t_game *game);
 
@@ -76,5 +77,16 @@ void	setup_hooks(t_game *game);
 void	cleanup_game(t_game *game);
 void	free_array(char **array);
 void	exit_error(const char *message, t_game *game);
+
+// Executor functions
+void	draw_square(t_game *game, int row, int col, int color);
+void	handle_input(void *param);
+void	ft_move_forward(t_game *game);
+void	ft_move_backward(t_game *game);
+void	ft_move_left(t_game *game);
+void	ft_move_right(t_game *game);
+int		start_game(t_game *game);
+void	render(t_game *game);
+void	ft_render(void *param);
 
 #endif

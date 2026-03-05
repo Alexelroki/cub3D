@@ -27,5 +27,5 @@ void	ft_render(void *param)
     t_game	*game;
 
     game = (t_game *)param;
-    render(game);
+    raycasting(game);
 }
