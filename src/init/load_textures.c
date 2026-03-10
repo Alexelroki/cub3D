@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_args.c                                    :+:      :+:    :+:   */
+/*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,21 @@
 
 #include "cub3d.h"
 
-static int	check_extension(char *file)
+static void	load_texture(t_game *game, mlx_texture_t **tex, char *path)
 {
-	int	len;
-
-	len = ft_strlen(file);
-	if (len < 5)
-		return (0);
-	if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
-		return (0);
-	return (1);
+	*tex = mlx_load_png(path);
+	if (!*tex)
+	{
+		ft_printf("Error\nFailed to load texture: %s\n", path);
+		cleanup_game(game);
+		exit(1);
+	}
 }
 
-void	validate_args(int argc, char **argv)
+void	load_textures(t_game *game)
 {
-	int	fd;
-
-	if (argc != 2)
-		exit_error("Usage: ./cub3D <map.cub>", NULL);
-	if (!check_extension(argv[1]))
-		exit_error("Map file must have .cub extension", NULL);
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		exit_error("Cannot open map file", NULL);
-	close(fd);
+	load_texture(game, &game->textures.tex_no, game->textures.path_no);
+	load_texture(game, &game->textures.tex_so, game->textures.path_so);
+	load_texture(game, &game->textures.tex_we, game->textures.path_we);
+	load_texture(game, &game->textures.tex_ea, game->textures.path_ea);
 }

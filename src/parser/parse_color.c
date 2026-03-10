@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_color.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
+/*   Updated: 2026/03/10 00:00:00 by albarrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	is_valid_number(char *str)
@@ -15,7 +27,7 @@ static int	is_valid_number(char *str)
 			return (0);
 		i++;
 	}
-	return (1);	
+	return (1);
 }
 
 static void	validate_range(t_game *game, int r, int g, int b)
@@ -26,7 +38,7 @@ static void	validate_range(t_game *game, int r, int g, int b)
 
 static int	rgb_to_int(int r, int g, int b)
 {
-	return ((r << 16) | (g << 8) | b);
+	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 }
 
 void	parse_color(t_game *game, int *dst, char *line)

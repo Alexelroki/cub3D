@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_args.c                                    :+:      :+:    :+:   */
+/*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,29 @@
 
 #include "cub3d.h"
 
-static int	check_extension(char *file)
+static void	move_player(t_game *game, double dx, double dy)
 {
-	int	len;
+	double	new_x;
+	double	new_y;
 
-	len = ft_strlen(file);
-	if (len < 5)
-		return (0);
-	if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
-		return (0);
-	return (1);
+	new_x = game->player.pos_x + dx;
+	new_y = game->player.pos_y + dy;
+	if (new_x >= 0 && new_x < game->map.cols
+		&& game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
+		game->player.pos_x = new_x;
+	if (new_y >= 0 && new_y < game->map.rows
+		&& game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
+		game->player.pos_y = new_y;
 }
 
-void	validate_args(int argc, char **argv)
+void	ft_move_forward(t_game *game)
 {
-	int	fd;
+	move_player(game, game->player.dir_x * MOVE_SPEED,
+		game->player.dir_y * MOVE_SPEED);
+}
 
-	if (argc != 2)
-		exit_error("Usage: ./cub3D <map.cub>", NULL);
-	if (!check_extension(argv[1]))
-		exit_error("Map file must have .cub extension", NULL);
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		exit_error("Cannot open map file", NULL);
-	close(fd);
+void	ft_move_backward(t_game *game)
+{
+	move_player(game, -game->player.dir_x * MOVE_SPEED,
+		-game->player.dir_y * MOVE_SPEED);
 }

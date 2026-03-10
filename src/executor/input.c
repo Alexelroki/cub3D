@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_args.c                                    :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,19 @@
 
 #include "cub3d.h"
 
-static int	check_extension(char *file)
+void	handle_input(void *param)
 {
-	int	len;
+	t_game	*game;
 
-	len = ft_strlen(file);
-	if (len < 5)
-		return (0);
-	if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
-		return (0);
-	return (1);
-}
-
-void	validate_args(int argc, char **argv)
-{
-	int	fd;
-
-	if (argc != 2)
-		exit_error("Usage: ./cub3D <map.cub>", NULL);
-	if (!check_extension(argv[1]))
-		exit_error("Map file must have .cub extension", NULL);
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		exit_error("Cannot open map file", NULL);
-	close(fd);
+	game = (t_game *)param;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(game->mlx);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+		ft_move_forward(game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+		ft_move_backward(game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+		ft_rotate_left(game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+		ft_rotate_right(game);
 }

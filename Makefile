@@ -12,6 +12,7 @@ UTILS_DIR = $(SRC_DIR)/utils
 
 SRC	=	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/init/init.c \
+		$(SRC_DIR)/init/load_textures.c \
 		$(SRC_DIR)/events/event.c \
 		$(PARSE_DIR)/validate_args.c \
 		$(PARSE_DIR)/parse_file.c \
@@ -22,10 +23,13 @@ SRC	=	$(SRC_DIR)/main.c \
 		$(PARSE_DIR)/validate_map_floodfill.c \
 		$(UTILS_DIR)/cleanup.c \
 		$(UTILS_DIR)/error.c \
+		$(EXEC_DIR)/draw.c \
 		$(EXEC_DIR)/execute.c \
-		$(EXEC_DIR)/render.c \
-		$(EXEC_DIR)/moves.c \
-		$(EXEC_DIR)/raycasting.c
+		$(EXEC_DIR)/input.c \
+		$(EXEC_DIR)/move.c \
+		$(EXEC_DIR)/raycasting.c \
+		$(EXEC_DIR)/rotate.c \
+		$(EXEC_DIR)/texture.c
 
 OBJS	= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 LIBFT_DIR = libft

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_args.c                                    :+:      :+:    :+:   */
+/*   rotations.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,23 @@
 
 #include "cub3d.h"
 
-static int	check_extension(char *file)
+static void	rotate_vector(double *x, double *y, double angle)
 {
-	int	len;
+	double	old_x;
 
-	len = ft_strlen(file);
-	if (len < 5)
-		return (0);
-	if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
-		return (0);
-	return (1);
+	old_x = *x;
+	*x = *x * cos(angle) - *y * sin(angle);
+	*y = old_x * sin(angle) + *y * cos(angle);
 }
 
-void	validate_args(int argc, char **argv)
+void	ft_rotate_right(t_game *game)
 {
-	int	fd;
+	rotate_vector(&game->player.dir_x, &game->player.dir_y, ROT_SPEED);
+	rotate_vector(&game->player.plane_x, &game->player.plane_y, ROT_SPEED);
+}
 
-	if (argc != 2)
-		exit_error("Usage: ./cub3D <map.cub>", NULL);
-	if (!check_extension(argv[1]))
-		exit_error("Map file must have .cub extension", NULL);
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		exit_error("Cannot open map file", NULL);
-	close(fd);
+void	ft_rotate_left(t_game *game)
+{
+	rotate_vector(&game->player.dir_x, &game->player.dir_y, -ROT_SPEED);
+	rotate_vector(&game->player.plane_x, &game->player.plane_y, -ROT_SPEED);
 }

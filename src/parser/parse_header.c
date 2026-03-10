@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_header.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
+/*   Updated: 2026/03/10 00:00:00 by albarrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	is_empty_line(char *line)
@@ -25,7 +37,7 @@ static void	parse_texture(t_game *game, char **dst, char *line)
 		i++;
 	*dst = ft_strtrim(line + i, " \n");
 	if (!*dst || ft_strlen(*dst) == 0)
-		exit_error("Invalid texture path", game);	
+		exit_error("Invalid texture path", game);
 }
 
 static int	parse_identifier(t_game *game, char *line)

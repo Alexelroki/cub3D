@@ -1,0 +1,15 @@
+==3486379== Memcheck, a memory error detector
+==3486379== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3486379== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3486379== Command: timeout 1 ./cub3D maps/valid/map_simple.cub
+==3486379== Parent PID: 3485055
+==3486379== 
+==3486379== 
+==3486379== HEAP SUMMARY:
+==3486379==     in use at exit: 0 bytes in 0 blocks
+==3486379==   total heap usage: 1,050 allocs, 1,050 frees, 69,884 bytes allocated
+==3486379== 
+==3486379== All heap blocks were freed -- no leaks are possible
+==3486379== 
+==3486379== For lists of detected and suppressed errors, rerun with: -s
+==3486379== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

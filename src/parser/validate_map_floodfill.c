@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_floodfill.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
+/*   Updated: 2026/03/10 00:00:00 by albarrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static char	**copy_map_grid(t_game *game)
@@ -27,7 +39,7 @@ static int	flood_fill(t_game *game, char **map, int row, int col)
 {
 	if (row < 0 || row >= game->map.rows)
 		return (0);
-	if (col < 0 || col >= (int)ft_strlen(map[row])) //Tenemos filas con diferentes tamaños
+	if (col < 0 || col >= (int)ft_strlen(map[row]))
 		return (0);
 	if (map[row][col] == ' ')
 		return (0);
