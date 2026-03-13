@@ -36,8 +36,8 @@ static void	cast_ray(t_game *game, t_ray *ray, int x)
 	calculate_step_data(ray, &game->player);
 	perform_dda_algorithm(game, ray);
 	calculate_wall_distance(ray, &game->player);
-	if (ray->perp_wall_dist < 0.1)
-		ray->perp_wall_dist = 0.1;
+	if (ray->perp_wall_dist < 1)
+		ray->perp_wall_dist = 1; // Evitamos distorsiones extremas
 	line_height = (int)(HEIGHT / ray->perp_wall_dist);
 	draw[0] = (HEIGHT - line_height) / 2;
 	if (draw[0] < 0)

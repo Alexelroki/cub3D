@@ -16,6 +16,12 @@
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.045
 
+enum	side
+{
+	VERTICAL,
+	HORIZONTAL
+};
+
 typedef struct s_ray
 {
 	double	raydir_x;
