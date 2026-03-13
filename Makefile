@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC	= cc
 CFLAGS	= -Wall -Wextra -Werror -g
-INCLUDE	= -I inc -I libft -I $(MLX42_DIR)/include/MLX42
+INCLUDE	= -I inc -I $(LIBFT_DIR) -I $(MLX42_DIR)/include/MLX42
 
 SRC_DIR	= src
 OBJ_DIR	= obj
@@ -32,10 +32,11 @@ SRC	=	$(SRC_DIR)/main.c \
 		$(EXEC_DIR)/texture.c
 
 OBJS	= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
-LIBFT_DIR = libft
+LIB_DIR = lib
+LIBFT_DIR = $(LIB_DIR)/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 # MLX42_DIR = /sgoinfre/shared/MLX42
-MLX42_DIR = MLX42
+MLX42_DIR = $(LIB_DIR)/MLX42
 MLX42_BUILD = $(MLX42_DIR)/build
 MLX42 = $(MLX42_BUILD)/libmlx42.a
 MLX42FLAGS = -L$(MLX42_BUILD) -lmlx42 -ldl -lglfw -pthread -lm
