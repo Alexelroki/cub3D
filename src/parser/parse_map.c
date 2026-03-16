@@ -45,6 +45,31 @@ static int	get_map_cols(t_game *game, int start)
 	return (max);
 }
 
+static char	*pad_line(t_game *game, char *line)
+{
+	char	*padded;
+	int		len;
+	int		i;
+
+	len = ft_strlen(line);
+	padded = malloc(sizeof(char) * (game->map.cols + 1));
+	if (!padded)
+		exit_error("Malloc map line failed", game);
+	i = 0;
+	while (i < len)
+	{
+		padded[i] = line[i];
+		i++;
+	}
+	while (i < game->map.cols)
+	{
+		padded[i] = ' ';
+		i++;
+	}
+	padded[i] = '\0';
+	return (padded);
+}
+
 static void	copy_map(t_game *game, int start)
 {
 	int	i;
@@ -55,7 +80,7 @@ static void	copy_map(t_game *game, int start)
 	i = 0;
 	while (game->file[start])
 	{
-		game->map.grid[i] = ft_strdup(game->file[start]);
+		game->map.grid[i] = pad_line(game, game->file[start]);
 		if (!game->map.grid[i])
 			exit_error("Malloc map copy failed", game);
 		i++;

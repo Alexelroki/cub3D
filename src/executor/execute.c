@@ -23,6 +23,9 @@ void	ft_render(void *param)
 int	start_game(t_game *game)
 {
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(game->mlx, game->img, 0, 0);
+	if (!game->img)
+		exit_error("Failed to create image", game);
+	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
+		exit_error("Failed to attach image to window", game);
 	return (0);
 }

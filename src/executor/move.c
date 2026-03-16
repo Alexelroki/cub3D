@@ -14,17 +14,15 @@
 
 static void	move_player(t_game *game, double dx, double dy)
 {
-	double	new_x;
-	double	new_y;
+	double	nx;
+	double	ny;
 
-	new_x = game->player.pos_x + dx;
-	new_y = game->player.pos_y + dy;
-	if (new_x >= 0 && new_x < game->map.cols
-		&& game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
-		game->player.pos_x = new_x;
-	if (new_y >= 0 && new_y < game->map.rows
-		&& game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
-		game->player.pos_y = new_y;
+	nx = game->player.pos_x + dx;
+	ny = game->player.pos_y + dy;
+	if (ft_can_move_to(game, nx, game->player.pos_y))
+		game->player.pos_x = nx;
+	if (ft_can_move_to(game, game->player.pos_x, ny))
+		game->player.pos_y = ny;
 }
 
 void	ft_move_forward(t_game *game)
@@ -37,4 +35,16 @@ void	ft_move_backward(t_game *game)
 {
 	move_player(game, -game->player.dir_x * MOVE_SPEED,
 		-game->player.dir_y * MOVE_SPEED);
+}
+
+void	ft_move_left(t_game *game)
+{
+	move_player(game, game->player.dir_y * MOVE_SPEED,
+		-game->player.dir_x * MOVE_SPEED);
+}
+
+void	ft_move_right(t_game *game)
+{
+	move_player(game, -game->player.dir_y * MOVE_SPEED,
+		game->player.dir_x * MOVE_SPEED);
 }

@@ -21,7 +21,7 @@ static mlx_texture_t	*get_texture(t_game *game, t_ray *ray)
 			return (game->textures.tex_ea);
 		return (game->textures.tex_we); // Hacia el oeste
 	}
-	if (ray->side == HORIZONTAL) // Pared horizontal
+	if (ray->step_y > 0)
 		return (game->textures.tex_so); // Hacia el sur
 	return (game->textures.tex_no); // Hacia el norte
 }
@@ -49,6 +49,10 @@ static int	get_tex_x(t_ray *ray, t_player *p, mlx_texture_t *tex)
 		wall_x = p->pos_x + ray->perp_wall_dist * ray->raydir_x;
 	wall_x -= floor(wall_x); // Resta la parte entera para obtener solo los decimales.
 	tex_x = (int)(wall_x * tex->width);
+	if (ray->side == VERTICAL && ray->raydir_x > 0)
+		tex_x = tex->width - tex_x - 1;
+	if (ray->side == HORIZONTAL && ray->raydir_y < 0)
+		tex_x = tex->width - tex_x - 1;
 	if (tex_x < 0 || tex_x >= (int)tex->width)
 		tex_x = 0; // Aseguramos que esté dentro de los límites
 	return (tex_x);
@@ -59,19 +63,20 @@ void	draw_wall(t_game *game, t_ray *ray, int x, int draw[2])
 {
 	mlx_texture_t	*tex;
 	int				tex_x;
-	int				tex_y;
+	double			step;
+	double			tex_pos;
 	int				y;
 
-	tex = get_texture(game, ray); // Obtenemos la textura correcta según la dirección del muro
-	tex_x = get_tex_x(ray, &game->player, tex); // Calculamos la columna de la textura a usar
-	y = draw[0]; // Empezamos a dibujar desde el punto superior del muro hasta el inferior
-	while (y <= draw[1]) // Dibujamos cada pixel de la columna del muro
-	{	// Ej.: (101 - 100) * 64 / (300 - 100 + 1) = 64 / 201 ==> tex_y = 0 (primer pixel de la textura)
-		// Ej.: (150 - 100) * 64 / (300 - 100 + 1) = 50 * 64 / 201 ==> tex_y = 15 (pixel intermedio)
-		// Ej.: (300 - 100) * 64 / (300 - 100 + 1) = 200 * 64 / 201 ==> tex_y = 63 (último pixel de la textura) 
-		tex_y = (y - draw[0]) * (int)tex->height / (draw[1] - draw[0] + 1); // Calculamos la fila de la textura a usar
-		if (tex_y >= 0 && tex_y < (int)tex->height) // Aseguramos que esté dentro de los límites
-			mlx_put_pixel(game->img, x, y, get_pixel_color(tex, tex_x, tex_y)); // Dibujamos el pixel con el color obtenido de la textura
-		y++; // Pasamos al siguiente pixel
+	tex = get_texture(game, ray);
+	tex_x = get_tex_x(ray, &game->player, tex);
+	step = (double)tex->height / ray->line_height;
+	tex_pos = (draw[0] - HEIGHT / 2 + ray->line_height / 2) * step;
+	y = draw[0];
+	while (y <= draw[1])
+	{
+		if ((int)tex_pos >= 0 && (int)tex_pos < (int)tex->height)
+			mlx_put_pixel(game->img, x, y, get_pixel_color(tex, tex_x, (int)tex_pos));
+		tex_pos += step;
+		y++;
 	}
 }

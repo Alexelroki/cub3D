@@ -93,13 +93,11 @@ void	perform_dda_algorithm(t_game *game, t_ray *ray)
 	}
 }
 
-void	calculate_wall_distance(t_ray *ray, t_player *player)
+void	calculate_wall_distance(t_ray *ray)
 {
-	/* Distancia perpendicular para evitar distorsión "fish-eye". */
+	/* side_dist ya avanzó un paso al entrar en la pared; restamos delta_dist. */
 	if (ray->side == VERTICAL)
-		ray->perp_wall_dist = (ray->map_x - player->pos_x
-				+ (1 - ray->step_x) / 2) / ray->raydir_x;
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - player->pos_y
-				+ (1 - ray->step_y) / 2) / ray->raydir_y;
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 }

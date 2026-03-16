@@ -15,6 +15,7 @@
 # define HEIGHT	600
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.045
+# define PLAYER_RADIUS 0.2
 
 enum	side
 {
@@ -33,6 +34,7 @@ typedef struct s_ray
 	double	delta_dist_x;
 	double	delta_dist_y;
 	double	perp_wall_dist;
+	int		line_height;
 	int		step_x;
 	int		step_y;
 	int		hit; // 0 = no hit, 1 = hit
@@ -97,9 +99,6 @@ void	validate_map(t_game *game);
 void	check_walls(t_game *game);
 
 void	init_player_dir(t_game *game);
-
-void	setup_hooks(t_game *game);
-
 void	cleanup_game(t_game *game);
 void	free_array(char **array);
 void	exit_error(const char *message, t_game *game);
@@ -108,15 +107,19 @@ void	exit_error(const char *message, t_game *game);
 int		start_game(t_game *game);
 void	ft_render(void *param);
 void	handle_input(void *param);
+int		ft_can_move_to(t_game *game, double x, double y);
 void	ft_move_forward(t_game *game);
 void	ft_move_backward(t_game *game);
+void	ft_move_left(t_game *game);
+void	ft_move_right(t_game *game);
 void	ft_rotate_left(t_game *game);
 void	ft_rotate_right(t_game *game);
+void	ft_rotate_by_angle(t_game *game, double angle);
 void	raycasting(t_game *game);
 void	init_ray_data(t_game *game, t_ray *ray, int x);
 void	calculate_step_data(t_ray *ray, t_player *player);
 void	perform_dda_algorithm(t_game *game, t_ray *ray);
-void	calculate_wall_distance(t_ray *ray, t_player *player);
+void	calculate_wall_distance(t_ray *ray);
 void	draw_wall(t_game *game, t_ray *ray, int x, int draw[2]);
 
 #endif
