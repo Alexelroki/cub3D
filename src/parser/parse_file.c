@@ -6,7 +6,7 @@
 /*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/10 00:00:00 by albarrei         ###   ########.fr       */
+/*   Updated: 2026/03/17 18:18:10 by albarrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	parse_file(t_game *game, char *file)
 
 	lines = count_lines(file);
 	fd = open(file, O_RDONLY);
-	game->file = malloc(sizeof(char *) * (lines + 1));
+	game->file = ft_calloc(lines + 1, sizeof(char *));
 	if (!game->file)
 		exit_error("Malloc file failed", game);
 	i = 0;

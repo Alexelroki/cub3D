@@ -523,6 +523,19 @@
    mlx42_supp_29
    Memcheck:Leak
    match-leak-kinds: reachable
+   fun:calloc
+   fun:_XrmInternalStringToQuark
+   fun:XrmInitialize
+   fun:glfwInit
+   fun:mlx_init
+   fun:init_window
+   fun:main
+}
+
+{
+   mlx42_supp_29
+   Memcheck:Leak
+   match-leak-kinds: reachable
    fun:_Znwm
    obj:/usr/lib/x86_64-linux-gnu/libLLVM-15.so.1
    obj:/usr/lib/x86_64-linux-gnu/libLLVM-15.so.1

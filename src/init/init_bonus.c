@@ -6,7 +6,7 @@
 /*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/16 00:00:00 by albarrei         ###   ########.fr       */
+/*   Updated: 2026/03/17 17:02:28 by albarrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	init_window(t_game *game)
 	game->mlx = mlx_init(WIDTH, HEIGHT, TITLE, false);
 	if (!game->mlx)
 		exit_error("Error init MLX42", game);
-	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
-	mlx_set_mouse_pos(game->mlx, WIDTH / 2, HEIGHT / 2);
+	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+	game->mouse_captured = 0;
 }
 
 static void	set_player_dir(t_game *game)

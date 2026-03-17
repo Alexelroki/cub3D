@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 17:00:41 by albarrei          #+#    #+#             */
+/*   Updated: 2026/03/17 17:05:45 by albarrei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -17,7 +29,7 @@
 # define ROT_SPEED 0.045
 # define PLAYER_RADIUS 0.2
 
-enum	side
+enum	e_side
 {
 	VERTICAL,
 	HORIZONTAL
@@ -81,6 +93,7 @@ typedef struct s_game
 	t_textures	textures;
 	t_map		map;
 	t_player	player;
+	int			mouse_captured;
 }	t_game;
 
 // Parser functions
