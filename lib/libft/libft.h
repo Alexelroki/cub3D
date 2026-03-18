@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albarrei <albarrei@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 02:31:11 by albarrei          #+#    #+#             */
-/*   Updated: 2025/03/11 11:51:45 by albarrei         ###   ########.fr       */
+/*   Updated: 2026/03/18 18:29:25 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <fcntl.h>
+# include <limits.h>
 
 /* ↓↓↓ This is for the get_next_line function ↓↓↓ */
 # ifndef BUFFER_SIZE

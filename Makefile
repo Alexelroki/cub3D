@@ -68,6 +68,7 @@ SUPP = mlx42.supp
 all: $(NAME)
 
 bonus:
+	rm -rf obj
 	$(MAKE) OBJ_DIR=obj_bonus SRCS="$(BONUS_SRCS)" all
 
 $(LIBFT):
@@ -90,6 +91,7 @@ clean:
 
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
+	rm -rf $(MLX42_BUILD)
 	$(RM) $(NAME)
 
 re: fclean all
