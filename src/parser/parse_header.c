@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_header.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/19 13:26:44 by dponce-g         ###   ########.fr       */
+/*   Updated: 2026/03/19 15:23:12 by albarrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,28 @@ static int	is_empty_line(char *line)
 	return (1);
 }
 
+static int	check_extensionpng(char *file)
+{
+	char	*base;
+	char	*dot;
+	char	*last_dot;
+
+	base = ft_strrchr(file, '/');
+	if (base)
+		base++;
+	else
+		base = file;
+	dot = ft_strchr(base, '.');
+	last_dot = ft_strrchr(base, '.');
+	if (!dot || dot != last_dot)
+		return (0);
+	if (dot == base)
+		return (0);
+	if (ft_strncmp(dot, ".png", 4) != 0 || dot[4])
+		return (0);
+	return (1);
+}
+
 static void	parse_texture(t_game *game, char **dst, char *line)
 {
 	int	i;
@@ -36,7 +58,7 @@ static void	parse_texture(t_game *game, char **dst, char *line)
 	while (line[i] && line[i] == ' ')
 		i++;
 	*dst = ft_strtrim(line + i, " \n");
-	if (!*dst || ft_strlen(*dst) == 0)
+	if (!*dst || ft_strlen(*dst) == 0 || !check_extensionpng(*dst))
 		exit_error("Invalid texture path", game);
 }
 
