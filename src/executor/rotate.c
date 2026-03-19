@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/17 17:02:14 by albarrei         ###   ########.fr       */
+/*   Updated: 2026/03/19 13:46:15 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 static void	rotate_vector(double *x, double *y, double angle)
 {
-/*
-** Rota un vector 2D por un ángulo en radianes.
-** Se usa para rotar tanto la dirección del jugador (dir)
-** como el plano de cámara (plane).
-*/
 	double	old_x;
 
 	old_x = *x;

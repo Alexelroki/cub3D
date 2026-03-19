@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albarrei <albarrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/17 18:18:11 by albarrei         ###   ########.fr       */
+/*   Updated: 2026/03/19 13:43:32 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	parse_map(t_game *game, int start)
 {
 	if (!game->file[start])
 		exit_error("Map is empty", game);
+	if (game->file[start - 1][0] != '\0')
+		exit_error("Map must be separated at least an empty line", game);
 	game->map.rows = count_map_lines(game, start);
 	game->map.cols = get_map_cols(game, start);
 	copy_map(game, start);

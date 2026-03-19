@@ -6,7 +6,7 @@
 /*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/18 18:22:16 by dponce-g         ###   ########.fr       */
+/*   Updated: 2026/03/19 12:38:37 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static int	is_valid_number(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
 	if (!str[i])
 		return (0);
 	while (str[i])
@@ -41,6 +39,26 @@ static int	rgb_to_int(int r, int g, int b)
 	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
 }
 
+static char	**ft_countandsplit(t_game *game, char *line)
+{
+	int		count;
+	int		i;
+	char	**rgb;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			count++;
+		i++;
+	}
+	if (count != 2)
+		exit_error("Invalid color format", game);
+	rgb = ft_split(line, ',');
+	return (rgb);
+}
+
 void	parse_color(t_game *game, int *dst, char *line)
 {
 	char	**rgb;
@@ -50,7 +68,7 @@ void	parse_color(t_game *game, int *dst, char *line)
 
 	if (*dst != -1)
 		exit_error("Duplicate color identifier", game);
-	rgb = ft_split(line, ',');
+	rgb = ft_countandsplit(game, line);
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 	{
 		free_array(rgb);

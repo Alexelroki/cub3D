@@ -6,17 +6,12 @@
 /*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 00:00:00 by albarrei          #+#    #+#             */
-/*   Updated: 2026/03/18 20:17:57 by dponce-g         ###   ########.fr       */
+/*   Updated: 2026/03/19 13:46:51 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*
-** Inicializa los datos del rayo para una columna de pantalla.
-** x: columna actual [0..WIDTH-1]
-** camera_x: posición de esa columna en el plano de cámara [-1..1].
-*/
 void	init_ray_data(t_game *game, t_ray *ray, int x)
 {
 	double	camera_x;
@@ -29,20 +24,16 @@ void	init_ray_data(t_game *game, t_ray *ray, int x)
 	if (ray->raydir_x == 0)
 		ray->delta_dist_x = 1e30;
 	else
-		/* Distancia del rayo entre dos cruces verticales consecutivos. */
 		ray->delta_dist_x = fabs(1 / ray->raydir_x);
 	if (ray->raydir_y == 0)
 		ray->delta_dist_y = 1e30;
 	else
-		/* Distancia del rayo entre dos cruces horizontales consecutivos. */
 		ray->delta_dist_y = fabs(1 / ray->raydir_y);
 	ray->hit = 0;
 }
 
 void	calculate_step_data(t_ray *ray, t_player *player)
 {
-	/* step_x/step_y indican si avanzamos celda a celda en +1 o -1. */
-	/* side_dist_x/side_dist_y: distancia inicial hasta el siguiente lado de celda. */
 	if (ray->raydir_x < 0)
 	{
 		ray->step_x = -1;
@@ -51,7 +42,6 @@ void	calculate_step_data(t_ray *ray, t_player *player)
 	else
 	{
 		ray->step_x = 1;
-		/* Si vamos en +X, el siguiente borde vertical está en map_x + 1. */
 		ray->side_dist_x = (ray->map_x + 1.0 - player->pos_x)
 			* ray->delta_dist_x;
 	}
@@ -63,7 +53,6 @@ void	calculate_step_data(t_ray *ray, t_player *player)
 	else
 	{
 		ray->step_y = 1;
-		/* Si vamos en +Y, el siguiente borde horizontal está en map_y + 1. */
 		ray->side_dist_y = (ray->map_y + 1.0 - player->pos_y)
 			* ray->delta_dist_y;
 	}
@@ -71,7 +60,6 @@ void	calculate_step_data(t_ray *ray, t_player *player)
 
 void	perform_dda_algorithm(t_game *game, t_ray *ray)
 {
-	/* DDA: avanza al siguiente lado de celda más cercano (X o Y). */
 	while (ray->hit == 0)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
@@ -95,7 +83,6 @@ void	perform_dda_algorithm(t_game *game, t_ray *ray)
 
 void	calculate_wall_distance(t_ray *ray)
 {
-	/* side_dist ya avanzó un paso al entrar en la pared; restamos delta_dist. */
 	if (ray->side == VERTICAL)
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
